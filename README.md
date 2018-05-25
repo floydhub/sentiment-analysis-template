@@ -1,2 +1,5 @@
 # sentiment-analysis-template
-Build a deep learning model for sentiment analysis of IMDB reviews
+
+![sentiment](images/sentiment.png)
+
+Build a deep learning model for sentiment analysis of [IMDB reviews](http://ai.stanford.edu/~amaas/data/sentiment/).
