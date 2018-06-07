@@ -1,5 +1,5 @@
 env: tensorflow-1.7
 machine: cpu
 data:
-  - source: sniper/datasets/dog-breed-images/1
-    destination: dogzzz
+  - source: floydhub/datasets/imdb-preprocessed/1
+    destination: imdb
