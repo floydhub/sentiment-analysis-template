@@ -1,7 +1,7 @@
-# sentiment-analysis-template
+# Sentiment Analysis
 
-[Sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) is one of the most common [NLP](https://en.wikipedia.org/wiki/Natural-language_processing) problems. The goal is to analyze a text and predict whether the underlying sentiment is positive, negative or neutral. 
-*What can you use it for?* Here are a few ideas - measure sentiment of customer support tickets, survey responses, social media, and movie reviews! 
+[Sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) is one of the most common [NLP](https://en.wikipedia.org/wiki/Natural-language_processing) problems. The goal is to analyze a text and predict whether the underlying sentiment is positive, negative or neutral.
+*What can you use it for?* Here are a few ideas - measure sentiment of customer support tickets, survey responses, social media, and movie reviews!
 
 ### Try it now
 
@@ -11,7 +11,7 @@ Click this button to open a Workspace on FloydHub that will train this model.
 
 ### Predicting sentiment of movie reviews
 
-In this notebook we will build a [Convolutional Neural Network](http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/) (CNN) classifier to predict the sentiment (positive or negative) of movie reviews. 
+In this notebook we will build a [Convolutional Neural Network](http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/) (CNN) classifier to predict the sentiment (positive or negative) of movie reviews.
 
 ![sentiment](images/sentiment.jpg)
 
