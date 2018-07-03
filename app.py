@@ -4,17 +4,22 @@ import pickle
 
 import flask
 from flask import Flask
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 import tensorflow as tf
 
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
-from serving import load_pretrained_model
+from support import load_pretrained_model
+
 """
 Import all the dependencies you need to load the model,
 preprocess your request and postprocess your result
+
+Local serving development:
+$ pip install -r requirements.txt
+$ FLASK_APP=app.py FLASK_DEBUG=1 flask run
 """
 LABELS = ['negative', 'positive']
 
@@ -43,8 +48,11 @@ model = None
 tokenizer = None
 
 # PATHS
-TOKENIZER_PATH = '/models/tokenizer.pickle'
-MODEL_PATH = '/models/cnn_sentiment_weights.h5'
+# TOKENIZER_PATH = '/models/tokenizer.pickle'
+# MODEL_PATH = '/models/cnn_sentiment_weights.h5'
+
+TOKENIZER_PATH = './tokenizer.pickle'
+MODEL_PATH = './cnn_sentiment_weights.h5'
 
 def load_model():
 	"""Load the model"""
@@ -73,12 +81,16 @@ def data_preprocessing(review):
 	review_np_array = sequence.pad_sequences(review_np_array, maxlen=MAX_LEN, padding="post", value=0)
 	return review_np_array
 
-# Every incoming POST request will run the `evaluate` method
-# The request method is POST (this method enables your to send
-# arbitrary data to the endpoint in the request body,
-# including images, JSON, encoded-data, etc.)
-@app.route('/<path:path>', methods=["POST"])
-def evaluate(path):
+
+load_tokenizer()
+load_model()
+
+@app.route('/hello', methods=['GET'])
+def index():
+    return render_template('serving_template.html')
+
+@app.route('/hello', methods=["POST"])
+def evaluate():
 	""""Preprocessing the data and evaluate the model"""
 	if flask.request.method == "POST":
 
@@ -91,12 +103,11 @@ def evaluate(path):
 		score = model.predict(review_np_array)[0][0]
 		prediction = LABELS[model.predict_classes(review_np_array)[0][0]]
 		output = 'REVIEW: {}\nPREDICTION: {}\nSCORE: {}\n'.format(review, prediction, score)
-		return output
+
+		return render_template('serving_template.html', results=output)
 
 # Load the model and run the server
 if __name__ == "__main__":
 	print(("* Loading model and starting Flask server..."
 		"please wait until server has fully started"))
-	load_tokenizer()
-	load_model()
 	app.run(host='0.0.0.0', threaded=False)

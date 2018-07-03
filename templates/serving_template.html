@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+  <h1>Serving</h1>
+
+  <form action="/hello" method='POST' enctype="multipart/form-data">
+      <div class='form-group'>
+        <input type="text" name="text" class="form-control" id="text" placeholder="Insert review..." />
+      </div>
+    <button class='btn btn-primary' type='Submit'>Submit</button>
+  </form>
+
+  <div>
+  {% if results %}
+    <p>{{results}}</p>
+  {% endif %}
+  </div>
+</div>
+
+
+<style type="text/css">
+  img {
+    max-width: 100%;
+  }
+</style>
+
+{% endblock %}
