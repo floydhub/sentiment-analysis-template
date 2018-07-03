@@ -43,6 +43,7 @@ app.config['DEBUG'] = False
 
 # MODELS
 model = None
+graph = None
 
 # Tokenizer
 tokenizer = None
@@ -56,8 +57,8 @@ MODEL_PATH = './cnn_sentiment_weights.h5'
 
 def load_model():
 	"""Load the model"""
-	global model, tokenizer
-	model = load_pretrained_model(MODEL_PATH,
+	global model, graph, tokenizer
+	(model, graph) = load_pretrained_model(MODEL_PATH,
 								tokenizer.num_words,
 								MAX_LEN,
 								EMBEDDING_DIM,
@@ -97,14 +98,22 @@ def evaluate():
 		review = request.form.get("text")
 		review_np_array = data_preprocessing(review)
 
-		global model
+		global model, graph
 
-		# Test model
-		score = model.predict(review_np_array)[0][0]
-		prediction = LABELS[model.predict_classes(review_np_array)[0][0]]
-		output = 'REVIEW: {}\nPREDICTION: {}\nSCORE: {}\n'.format(review, prediction, score)
+		with graph.as_default():
+			# Test model
+			score = model.predict(review_np_array)[0][0]
+			prediction = LABELS[model.predict_classes(review_np_array)[0][0]]
+			output = 'REVIEW: {}\nPREDICTION: {}\nSCORE: {}\n'.format(review, prediction, score)
 
-		return render_template('serving_template.html', results=output)
+			# For @justin :)
+			if score >= 0.5:
+				emoji = '👍🏻'
+			else:
+				emoji = '👎🏻'
+			results = [review, prediction, score, emoji]
+
+		return render_template('serving_template.html', results=results)
 
 # Load the model and run the server
 if __name__ == "__main__":

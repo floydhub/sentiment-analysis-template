@@ -6,23 +6,20 @@
 
   <form action="/hello" method='POST' enctype="multipart/form-data">
       <div class='form-group'>
-        <input type="text" name="text" class="form-control" id="text" placeholder="Insert review..." />
+        <input type="text" name="text" class="form-control"
+          id="text" placeholder="Insert review..." />
       </div>
     <button class='btn btn-primary' type='Submit'>Submit</button>
   </form>
 
   <div>
   {% if results %}
-    <p>{{results}}</p>
+    <p>REVIEW: {{results[0]}}</p>
+    <p>PREDICTION: {{results[1]}}</p>
+    <p>SCORE: {{results[2]}}</p>
+    <p>{{results[3]}}</p>
   {% endif %}
   </div>
 </div>
-
-
-<style type="text/css">
-  img {
-    max-width: 100%;
-  }
-</style>
 
 {% endblock %}

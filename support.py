@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, GlobalMaxPooling1D, Flatten, Conv1D, Dropout, Activation
-
+import tensorflow as tf
 
 def load_pretrained_model(MODEL_PATH,
                         VOCAB_SIZE,
@@ -41,8 +41,9 @@ def load_pretrained_model(MODEL_PATH,
     model.add(Activation('sigmoid'))
 
     model.load_weights(MODEL_PATH)
+    graph = tf.get_default_graph()
     print('loaded!')
-    return model
+    return (model, graph)
 
 
 def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14):
